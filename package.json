@@ -1,0 +1,25 @@
+{
+  "name": "redux-base",
+  "version": "1.0.0",
+  "description": "Redux Base Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js"
+  },
+  "keywords": [],
+  "author": "Zak Zangrando",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.0.1",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.5.1",
+    "axios": "^0.21.1",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "reselect": "^4.0.0"
+  }
+}
