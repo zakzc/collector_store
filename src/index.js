@@ -9,11 +9,9 @@ import {
 import {
   loadBooks,
   addBook,
-  removeBookById,
-  removeBookByName,
+  removeBook,
   updateBook,
   selectSells,
-  updateBookById,
 } from "./store/books";
 import { addUser, removeUser, updateUser } from "./store/users";
 
@@ -24,23 +22,24 @@ const unsubscribe = store.subscribe(() => {
 });
 
 store.dispatch(loadBooks());
+
 // store.dispatch(addUser({ description: "User 1" }));
 // store.dispatch(addUser({ description: "User 2" }));
-store.dispatch(
-  addBook({
-    collector: "60a381a917b50e24c02df7bb",
-    typeOfMedia: "H",
-    title: "Queen Margot",
-    author: ["Alexandre Dumas"],
-    genre: "non-fiction",
-    mediaID: "32345",
-    quantity: 3,
-    sellable: true,
-    dateOfPurchase: "10/1/1987",
-    price: 235.23,
-    details: "nothing",
-  })
-);
+// store.dispatch(
+//   addBook({
+//     collector: "60a381a917b50e24c02df7bb",
+//     typeOfMedia: "H",
+//     title: "Queen Margot",
+//     author: ["Alexandre Dumas"],
+//     genre: "non-fiction",
+//     mediaID: "32345",
+//     quantity: 3,
+//     sellable: true,
+//     dateOfPurchase: "10/1/1987",
+//     price: 235.23,
+//     details: "nothing",
+//   })
+// );
 // store.dispatch(
 //   addBook({
 //     collector: "60a381a917b50e24c02df7bb",
@@ -108,10 +107,28 @@ store.dispatch(
 //     details: "nothing",
 //   })
 // );
+store.dispatch(
+  updateBook({
+    id: "60bbca3a3b0f21816c48dbc5",
+    collector: "60a381a917b50e24c02df7bb",
+    typeOfMedia: "H",
+    title: "Queen Margot",
+    author: ["Alexandre Dumas"],
+    genre: "non-fiction",
+    mediaID: "32345",
+    quantity: 1,
+    sellable: false,
+    dateOfPurchase: "10/1/1987",
+    price: 135.23,
+    details: "This was updated",
+  })
+);
 
-let toSell = selectSells(store.getState());
-console.log("\b To sell here: ", toSell);
-let getLPs = selectAudioType(store.getState());
-console.log("LPs here: ", getLPs);
+store.dispatch(removeBook("60bbca3a3b0f21816c48dbc6"));
+
+// let toSell = selectSells(store.getState());
+// console.log("\b To sell here: ", toSell);
+// let getLPs = selectAudioType(store.getState());
+// console.log("LPs here: ", getLPs);
 
 unsubscribe();

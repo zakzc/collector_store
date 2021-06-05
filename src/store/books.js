@@ -30,23 +30,14 @@ const slice = createSlice({
     },
     /// events
     bookAdded: (books, action) => {
-      console.log(
-        "Received:",
-        books.listOfBooks,
-        typeof books.listOfBooks,
-        action.payload.data,
-        typeof action.payload.data
-      );
-      // const newArrayOfBooks = [...books.listOfBooks, action.payload.data];
-      // books.listOfBooks = newArrayOfBooks;
       books.listOfBooks.push(action.payload.data);
     },
-    bookRemovedById: (state, action) =>
-      (state = state.listOfBooks.filter((i) => i.id !== action.payload.id)),
-    bookRemovedByName: (state, action) =>
-      (state = state.listOfBooks.filter(
-        (i) => i.title !== action.payload.title
-      )),
+
+    bookRemoved: (books, action) => {
+      console.log("received", action.payload.id);
+      books = books.listOfBooks.filter((i) => i.id !== action.payload.id);
+    },
+
     bookUpdated: (state, action) => {
       console.log("received", action.payload.id);
       const index = state.listOfBooks.findIndex(
@@ -77,8 +68,7 @@ export const {
   booksRequestFailed,
   booksAssignedToUser,
   bookAdded,
-  bookRemovedById,
-  bookRemovedByName,
+  bookRemoved,
   bookUpdated,
 } = slice.actions;
 export default slice.reducer;
@@ -86,7 +76,7 @@ export default slice.reducer;
 // Action creators
 
 const url = "http://localhost:3000/collections/books";
-const header = { "Content-type": "application/x-www-form-urlencoded" };
+// const header = { "Content-type": "application/x-www-form-urlencoded" };
 
 export const loadBooks = () => (dispatch, getState) => {
   const { lastFetch } = getState().entities.books;
@@ -96,7 +86,6 @@ export const loadBooks = () => (dispatch, getState) => {
   return dispatch(
     apiCallBegan({
       url: url + "/getAll",
-      headers: header,
       onStart: booksRequested.type,
       onSuccess: booksReceived.type,
       onError: booksRequestFailed.type,
@@ -107,26 +96,27 @@ export const loadBooks = () => (dispatch, getState) => {
 export const addBook = (book) =>
   apiCallBegan({
     url: url + "/addNewItem",
-    method: "POST",
-    headers: header,
+    method: "post",
     data: book,
     onSuccess: bookAdded.type,
   });
 
-export const updateBookById = (id, dataToUpdate) =>
-  apiCallBegan({
-    url: url + "/" + id,
-    method: "PATCH",
-    data: dataToUpdate,
-    onSuccess: bookRemovedById.type,
-  });
+// ! url, method, headers, data, onStart, onSuccess, onError;
 
-export const updateBookByName = (name, dataToUpdate) =>
+export const updateBook = (dataToUpdate) =>
   apiCallBegan({
-    url: "http://localhost:3000/" + "/updateItem/" + id,
+    url: url + "/updateItem/" + dataToUpdate.id,
     method: "patch",
     data: dataToUpdate,
-    onSuccess: bookRemovedByName.type,
+    onSuccess: bookUpdated.type,
+  });
+
+export const removeBook = (id) =>
+  apiCallBegan({
+    url: url + "/deleteItem/" + id,
+    method: "delete",
+    data: null,
+    onSuccess: bookRemoved.type,
   });
 
 // Selectors
