@@ -63,7 +63,6 @@ store.dispatch(loadBooks());
 //     title: "The Count of Mount Christ",
 //     author: ["Alexandre Dumas"],
 //     genre: "fiction",
-//     edition: 13,
 //     mediaID: "523465",
 //     quantity: 1,
 //     sellable: false,
@@ -108,8 +107,7 @@ store.dispatch(loadBooks());
 //   })
 // );
 store.dispatch(
-  updateBook({
-    id: "60bbca3a3b0f21816c48dbc5",
+  updateBook("60bdd6a442dfaaadaaf40cfb", {
     collector: "60a381a917b50e24c02df7bb",
     typeOfMedia: "H",
     title: "Queen Margot",
@@ -121,10 +119,11 @@ store.dispatch(
     dateOfPurchase: "10/1/1987",
     price: 135.23,
     details: "This was updated",
+    notes: "2nd edition. ",
   })
 );
 
-store.dispatch(removeBook("60bbca3a3b0f21816c48dbc6"));
+// store.dispatch(removeBook("60bbca3a3b0f21816c48dbc6"));
 
 // let toSell = selectSells(store.getState());
 // console.log("\b To sell here: ", toSell);

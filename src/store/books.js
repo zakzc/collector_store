@@ -45,7 +45,6 @@ const slice = createSlice({
       );
       console.log("found", index);
       state.listOfBooks[index] = {
-        id: action.payload.id,
         collector: action.payload.collector,
         typeOfMedia: action.payload.typeOfMedia,
         title: action.payload.title,
@@ -103,9 +102,9 @@ export const addBook = (book) =>
 
 // ! url, method, headers, data, onStart, onSuccess, onError;
 
-export const updateBook = (dataToUpdate) =>
+export const updateBook = (id, dataToUpdate) =>
   apiCallBegan({
-    url: url + "/updateItem/" + dataToUpdate.id,
+    url: url + "/updateItem/" + id,
     method: "patch",
     data: dataToUpdate,
     onSuccess: bookUpdated.type,
