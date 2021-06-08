@@ -106,22 +106,22 @@ store.dispatch(loadBooks());
 //     details: "nothing",
 //   })
 // );
-store.dispatch(
-  updateBook("60bdd6a442dfaaadaaf40cfb", {
-    collector: "60a381a917b50e24c02df7bb",
-    typeOfMedia: "H",
-    title: "Queen Margot",
-    author: ["Alexandre Dumas"],
-    genre: "non-fiction",
-    mediaID: "32345",
-    quantity: 1,
-    sellable: false,
-    dateOfPurchase: "10/1/1987",
-    price: 135.23,
-    details: "This was updated",
-    notes: "2nd edition. ",
-  })
-);
+// store.dispatch(
+//   updateBook("60bdd6a442dfaaadaaf40cfb", {
+//     collector: "60a381a917b50e24c02df7bb",
+//     typeOfMedia: "H",
+//     title: "Queen Margot",
+//     author: ["Alexandre Dumas"],
+//     genre: "non-fiction",
+//     mediaID: "32345",
+//     quantity: 1,
+//     sellable: false,
+//     dateOfPurchase: "10/1/1987",
+//     price: 135.23,
+//     details: "This was updated",
+//     notes: "2nd edition. ",
+//   })
+// );
 
 // store.dispatch(removeBook("60bbca3a3b0f21816c48dbc6"));
 
