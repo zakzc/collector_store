@@ -1,9 +1,9 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { loadBooks, addBook } from "../books";
+import { loadmedias, addmedia } from "../medias";
 import configureStore from "../configureStore";
 
-describe("Test for book slice", () => {
+describe("Test for media slice", () => {
   let fakeAxios;
   let store;
   beforeEach(() => {
@@ -11,51 +11,51 @@ describe("Test for book slice", () => {
     store = configureStore();
   });
 
-  const booksSlice = () => store.getState().entities.books;
+  const mediasSlice = () => store.getState().entities.medias;
 
-  describe("loading books", () => {
-    describe("If books in the cache", () => {
+  describe("loading medias", () => {
+    describe("If medias in the cache", () => {
       it("they should not be fetched from the server again", async () => {
-        fakeAxios.onGet("/books/getAll").reply(200, [{ id: 1 }]);
-        await store.dispatch(loadBooks());
-        await store.dispatch(loadBooks());
+        fakeAxios.onGet("/medias/getAll").reply(200, [{ id: 1 }]);
+        await store.dispatch(loadmedias());
+        await store.dispatch(loadmedias());
 
         expect(fakeAxios.history.get.length).toBe(1);
       });
     });
     describe("loading indicator", () => {
       it("should be true while fetching data", () => {
-        fakeAxios.onGet("books/getAll").reply(() => {
-          expect(booksSlice().loading).toBe(true);
+        fakeAxios.onGet("medias/getAll").reply(() => {
+          expect(mediasSlice().loading).toBe(true);
           return [200, [{ id: 1 }]];
         });
-        store.dispatch(loadBooks());
+        store.dispatch(loadmedias());
       });
       it("should be false after data is fetched", async () => {
-        fakeAxios.onGet("/books/getAll").reply(200, [{ id: 1 }]);
-        await store.dispatch(loadBooks());
-        expect(booksSlice().loading).toBe(false);
+        fakeAxios.onGet("/medias/getAll").reply(200, [{ id: 1 }]);
+        await store.dispatch(loadmedias());
+        expect(mediasSlice().loading).toBe(false);
       });
     });
   });
 
-  //   describe("adding books", () => {
-  //     it("should add a book", async () => {
-  //       const fakeBook = { description: "fakeBook" };
-  //       const savedBook = { ...fakeBook, id: 1 };
+  //   describe("adding medias", () => {
+  //     it("should add a media", async () => {
+  //       const fakemedia = { description: "fakemedia" };
+  //       const savedmedia = { ...fakemedia, id: 1 };
   //       fakeAxios
   //         .onPost("/addNewItem")
-  //         .reply(200, { success: true, data: savedBook });
-  //       await store.dispatch(addBook(fakeBook));
-  //       console.log("===\n", booksSlice());
-  //       expect(booksSlice().listOfBooks).toBe(true);
-  //       //   expect(booksSlice().data).toContainEqual(savedBook);
+  //         .reply(200, { success: true, data: savedmedia });
+  //       await store.dispatch(addmedia(fakemedia));
+  //       console.log("===\n", mediasSlice());
+  //       expect(mediasSlice().listOfmedias).toBe(true);
+  //       //   expect(mediasSlice().data).toContainEqual(savedmedia);
   //     });
-  //     it("should not add a book if it not saved to the server", async () => {
-  //       const fakeBook2 = { id: 2 };
+  //     it("should not add a media if it not saved to the server", async () => {
+  //       const fakemedia2 = { id: 2 };
   //       fakeAxios.onPost("./addNewItem").reply(500);
-  //       await store.dispatch(addBook(fakeBook2));
-  //       expect(booksSlice().listOfBooks).toHaveLength(0);
+  //       await store.dispatch(addmedia(fakemedia2));
+  //       expect(mediasSlice().listOfmedias).toHaveLength(0);
   //     });
   //   });
 });

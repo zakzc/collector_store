@@ -1,47 +1,40 @@
 import configureStore from "./store/configureStore";
 import {
-  addAudio,
-  removeAudioById,
-  removeAudioByName,
-  updateAudio,
-  selectAudioType,
-} from "./store/audio";
-import {
-  loadBooks,
-  addBook,
-  removeBook,
-  updateBook,
+  loadmedias,
+  addmedia,
+  removemedia,
+  updatemedia,
   selectSells,
-} from "./store/books";
+} from "./store/medias";
 import { addUser, removeUser, updateUser } from "./store/users";
 
 const store = configureStore();
 
 const unsubscribe = store.subscribe(() => {
-  // console.log("Store for books\n", store.getState().entities.books);
+  // console.log("Store for medias\n", store.getState().entities.medias);
 });
 
-store.dispatch(loadBooks());
+store.dispatch(loadmedias());
 
 // store.dispatch(addUser({ description: "User 1" }));
 // store.dispatch(addUser({ description: "User 2" }));
+store.dispatch(
+  addmedia({
+    collector: "60a381a917b50e24c02df7bb",
+    typeOfMedia: "Book",
+    title: "Queen Margot",
+    author: "Alexandre Dumas",
+    subType: "Novel",
+    mediaID: "32345",
+    quantity: 3,
+    sellable: true,
+    dateOfPurchase: "1987-10-01",
+    price: 235.23,
+    details: "nothing",
+  })
+);
 // store.dispatch(
-//   addBook({
-//     collector: "60a381a917b50e24c02df7bb",
-//     typeOfMedia: "H",
-//     title: "Queen Margot",
-//     author: ["Alexandre Dumas"],
-//     genre: "non-fiction",
-//     mediaID: "32345",
-//     quantity: 3,
-//     sellable: true,
-//     dateOfPurchase: "10/1/1987",
-//     price: 235.23,
-//     details: "nothing",
-//   })
-// );
-// store.dispatch(
-//   addBook({
+//   addmedia({
 //     collector: "60a381a917b50e24c02df7bb",
 //     typeOfMedia: "P",
 //     title: "The 3 mosqueteers",
@@ -55,9 +48,9 @@ store.dispatch(loadBooks());
 //     details: "nothing",
 //   })
 // );
-// store.dispatch(removeBookById({ id: 1 }));
+// store.dispatch(removemediaById({ id: 1 }));
 // store.dispatch(
-//   addBook({
+//   addmedia({
 //     collector: "60a381a917b50e24c02df7bb",
 //     typeOfMedia: "H",
 //     title: "The Count of Mount Christ",
@@ -71,9 +64,9 @@ store.dispatch(loadBooks());
 //     details: "something",
 //   })
 // );
-// store.dispatch(removeBookByName({ description: "Book 2" }));
+// store.dispatch(removemediaByName({ description: "media 2" }));
 // store.dispatch(
-//   addBook({
+//   addmedia({
 //     collector: "60a381a917b50e24c02df7bb",
 //     typeOfMedia: "H",
 //     title: "Twenty years after",
@@ -91,7 +84,7 @@ store.dispatch(loadBooks());
 // store.dispatch(updateUser({ id: 2, description: "Nice user 2" }));
 // store.dispatch(addAudio({ description: "Nice album 2", category: "LP" }));
 // store.dispatch(
-//   updateBookById({
+//   updatemediaById({
 //     id: 2,
 //     collector: "Paul",
 //     typeOfMedia: "paperback",
@@ -107,7 +100,7 @@ store.dispatch(loadBooks());
 //   })
 // );
 // store.dispatch(
-//   updateBook("60bdd6a442dfaaadaaf40cfb", {
+//   updatemedia("60bdd6a442dfaaadaaf40cfb", {
 //     collector: "60a381a917b50e24c02df7bb",
 //     typeOfMedia: "H",
 //     title: "Queen Margot",
@@ -123,7 +116,7 @@ store.dispatch(loadBooks());
 //   })
 // );
 
-// store.dispatch(removeBook("60bbca3a3b0f21816c48dbc6"));
+// store.dispatch(removemedia("60bbca3a3b0f21816c48dbc6"));
 
 // let toSell = selectSells(store.getState());
 // console.log("\b To sell here: ", toSell);

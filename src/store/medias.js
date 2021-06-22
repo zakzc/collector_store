@@ -5,43 +5,45 @@ import axios from "axios";
 import { apiCallBegan } from "./api_actions";
 
 const slice = createSlice({
-  name: "books",
-  initialState: { listOfBooks: [], loading: false, lastFetch: null },
+  name: "medias",
+  initialState: { listOfMedias: [], loading: false, lastFetch: null },
   ///
   reducers: {
     /// calls
-    booksRequested: (books, action) => {
-      books.loading = true;
+    mediasRequested: (medias, action) => {
+      medias.loading = true;
     },
-    booksReceived: (books, action) => {
-      books.listOfBooks = action.payload.data;
-      books.loading = false;
-      books.lastFetch = Date.now();
+    mediasReceived: (medias, action) => {
+      medias.listOfMedias = action.payload.data;
+      medias.loading = false;
+      medias.lastFetch = Date.now();
     },
-    booksRequestFailed: (books, action) => {
-      books.loading = false;
+    mediasRequestFailed: (medias, action) => {
+      medias.loading = false;
     },
-    booksAssignedToUser: (books, action) => {
+    mediasAssignedToUser: (medias, action) => {
       const { id: mediaId, userId } = action.payload;
-      const index = books.listOfBooks.findIndex((book) => book.id === mediaId);
-      books.listOfBooks[index].userId = userId;
+      const index = medias.listOfMedias.findIndex(
+        (media) => media.id === mediaId
+      );
+      medias.listOfMedias[index].userId = userId;
     },
     /// events
-    bookAdded: (books, action) => {
-      books.listOfBooks.push(action.payload.data);
-      console.log("added", books.listOfBooks);
+    mediaAdded: (medias, action) => {
+      medias.listOfMedias.push(action.payload.data);
+      console.log("added", medias.listOfMedias);
     },
 
-    bookRemoved: (books, action) => {
-      books = books.listOfBooks.filter((i) => i.id !== action.payload.id);
+    mediaRemoved: (medias, action) => {
+      medias = medias.listOfMedias.filter((i) => i.id !== action.payload.id);
     },
 
-    bookUpdated: (state, action) => {
-      const index = state.listOfBooks.findIndex(
-        (book) => book.id === action.payload.id
+    mediaUpdated: (state, action) => {
+      const index = state.listOfMedias.findIndex(
+        (media) => media.id === action.payload.id
       );
       // console.log("found", index);
-      state.listOfBooks[index] = {
+      state.listOfMedias[index] = {
         collector: action.payload.collector,
         typeOfMedia: action.payload.typeOfMedia,
         title: action.payload.title,
@@ -59,26 +61,26 @@ const slice = createSlice({
 });
 
 export const {
-  booksRequested,
-  booksReceived,
-  booksRequestFailed,
-  booksAssignedToUser,
-  bookAdded,
-  bookRemoved,
-  bookUpdated,
+  mediasRequested,
+  mediasReceived,
+  mediasRequestFailed,
+  mediasAssignedToUser,
+  mediaAdded,
+  mediaRemoved,
+  mediaUpdated,
 } = slice.actions;
 export default slice.reducer;
 
 // Action creators
 
-const url = "http://localhost:3000/collections/books";
+const url = "http://localhost:3000/collections/";
 // const header = { "Content-type": "application/x-www-form-urlencoded" };
 
 let fetchTimer = new Date().getTime();
 let initialFetch = true;
 let timeDifference;
 
-export const loadBooks = () => (dispatch, getState) => {
+export const loadmedias = () => (dispatch, getState) => {
   // if (initialFetch) {
   //   console.log("Initiation", initialFetch, fetchTimer, timeDifference);
   //   timeDifference = 0;
@@ -93,9 +95,9 @@ export const loadBooks = () => (dispatch, getState) => {
     return dispatch(
       apiCallBegan({
         url: url + "/getAll",
-        onStart: booksRequested.type,
-        onSuccess: booksReceived.type,
-        onError: booksRequestFailed.type,
+        onStart: mediasRequested.type,
+        onSuccess: mediasReceived.type,
+        onError: mediasRequestFailed.type,
       })
     );
   } else {
@@ -108,34 +110,34 @@ export const loadBooks = () => (dispatch, getState) => {
   }
 };
 
-export const addBook = (book) =>
+export const addmedia = (media) =>
   apiCallBegan({
     url: url + "/addNewItem",
     method: "post",
-    data: book,
-    onSuccess: bookAdded.type,
+    data: media,
+    onSuccess: mediaAdded.type,
   });
 
 //  url, method, headers, data, onStart, onSuccess, onError;
 
-export const updateBook = (id, dataToUpdate) =>
+export const updatemedia = (id, dataToUpdate) =>
   apiCallBegan({
     url: url + "/updateItem/" + id,
     method: "patch",
     data: dataToUpdate,
-    onSuccess: bookUpdated.type,
+    onSuccess: mediaUpdated.type,
   });
 
-export const removeBook = (id) =>
+export const removemedia = (id) =>
   apiCallBegan({
     url: url + "/deleteItem/" + id,
     method: "delete",
     data: null,
-    onSuccess: bookRemoved.type,
+    onSuccess: mediaRemoved.type,
   });
 
 // Selectors
 export const selectSells = createSelector(
-  (state) => state.entities.books,
-  (books) => books.listOfBooks.filter((b) => b.sellable === true)
+  (state) => state.entities.medias,
+  (medias) => medias.listOfmedias.filter((b) => b.sellable === true)
 );
