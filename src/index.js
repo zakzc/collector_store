@@ -1,25 +1,29 @@
 import configureStore from "./store/configureStore";
+import { setConnection } from "./store/context";
 import {
-  loadmedias,
-  addmedia,
-  removemedia,
-  updatemedia,
+  loadMedias,
+  addMedia,
+  removeMedia,
+  updateMedia,
   selectSells,
+  selectBooks,
+  selectAudioAnalog,
+  selectLPs,
+  selectBooksToSell
 } from "./store/medias";
 import { addUser, removeUser, updateUser } from "./store/users";
 
 const store = configureStore();
 
-const unsubscribe = store.subscribe(() => {
-  // console.log("Store for medias\n", store.getState().entities.medias);
-});
+const unsubscribe = store.subscribe(() => {});
 
-store.dispatch(loadmedias());
+store.dispatch(loadMedias());
 
 // store.dispatch(addUser({ description: "User 1" }));
 // store.dispatch(addUser({ description: "User 2" }));
+// store.dispatch(setConnection(false));
 store.dispatch(
-  addmedia({
+  addMedia({
     collector: "60a381a917b50e24c02df7bb",
     typeOfMedia: "Book",
     title: "Queen Margot",
@@ -33,8 +37,9 @@ store.dispatch(
     details: "nothing",
   })
 );
+
 // store.dispatch(
-//   addmedia({
+//   addMedia({
 //     collector: "60a381a917b50e24c02df7bb",
 //     typeOfMedia: "P",
 //     title: "The 3 mosqueteers",
@@ -48,9 +53,9 @@ store.dispatch(
 //     details: "nothing",
 //   })
 // );
-// store.dispatch(removemediaById({ id: 1 }));
+// store.dispatch(removeMediaById({ id: 1 }));
 // store.dispatch(
-//   addmedia({
+//   addMedia({
 //     collector: "60a381a917b50e24c02df7bb",
 //     typeOfMedia: "H",
 //     title: "The Count of Mount Christ",
@@ -64,9 +69,9 @@ store.dispatch(
 //     details: "something",
 //   })
 // );
-// store.dispatch(removemediaByName({ description: "media 2" }));
+// store.dispatch(removeMediaByName({ description: "media 2" }));
 // store.dispatch(
-//   addmedia({
+//   addMedia({
 //     collector: "60a381a917b50e24c02df7bb",
 //     typeOfMedia: "H",
 //     title: "Twenty years after",
@@ -84,7 +89,7 @@ store.dispatch(
 // store.dispatch(updateUser({ id: 2, description: "Nice user 2" }));
 // store.dispatch(addAudio({ description: "Nice album 2", category: "LP" }));
 // store.dispatch(
-//   updatemediaById({
+//   updateMediaById({
 //     id: 2,
 //     collector: "Paul",
 //     typeOfMedia: "paperback",
@@ -100,7 +105,7 @@ store.dispatch(
 //   })
 // );
 // store.dispatch(
-//   updatemedia("60bdd6a442dfaaadaaf40cfb", {
+//   updateMedia("60bdd6a442dfaaadaaf40cfb", {
 //     collector: "60a381a917b50e24c02df7bb",
 //     typeOfMedia: "H",
 //     title: "Queen Margot",
@@ -116,11 +121,44 @@ store.dispatch(
 //   })
 // );
 
-// store.dispatch(removemedia("60bbca3a3b0f21816c48dbc6"));
+// store.dispatch(
+//   addMedia({
+//     collector: "60a381a917b50e24c02df7bb",
+//     typeOfMedia: "AUDIO_Analog",
+//     title: "Houses of the Holy",
+//     author: "Led Zeppelin",
+//     subType: "LP",
+//     mediaID: "121245",
+//     quantity: 3,
+//     sellable: true,
+//     dateOfPurchase: "1987-10-01",
+//     price: 235.23,
+//     details: "nothing",
+//   })
+// );
 
-// let toSell = selectSells(store.getState());
-// console.log("\b To sell here: ", toSell);
-// let getLPs = selectAudioType(store.getState());
-// console.log("LPs here: ", getLPs);
+// store.dispatch(removeMedia("60bbca3a3b0f21816c48dbc6"));
+
+let timeFunctionDueToAsyncFetchOfData = setTimeout(() => {
+  const checkMe = store.getState().medias;
+  console.log("ck", checkMe);
+  let tod = selectSells(store.getState());
+  console.log("\b To sell: ", tod, typeof tod);
+  let bookOnly = selectBooks(store.getState());
+  console.log("\b Books: ", bookOnly);
+  let bookSell = selectBooksToSell(store.getState());
+  console.log("b to se", bookSell)
+  let getAudio = selectAudioAnalog(store.getState());
+  console.log("Anal here: ", getAudio);
+  let getLP = selectLPs(store.getState());
+  console.log("Lps: ", getLP)
+}, 3000);
+
+store.dispatch(setConnection(true));
+// const checkMe = store.getState().medias;
+// console.log("ck", checkMe);
+// const checkMe2 = store.getState().context;
+
+// console.log("ck2", checkMe2);
 
 unsubscribe();
